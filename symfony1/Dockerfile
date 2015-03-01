@@ -2,14 +2,16 @@ FROM kamilwojciech/apache-php55
 
 MAINTAINER Kamil Wojciech "wojciech.kamil@gmail.com"
 
-ADD files/apache/000-default.conf /etc/apache2/sites-enabled/000-default.conf
+ADD files/apache/000-default /etc/apache2/sites-enabled/000-default
 
 RUN mkdir /var/www/web
-ADD files/index.php /var/www/web/index.php
+RUN mkdir /var/www/cache
+run chmod 777 /var/www/cache
 
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /var/log
+ADD files/run.sh /usr/bin/run.sh
+RUN chmod 755 /usr/bin/run.sh
 
-CMD ["/usr/sbin/apache2", "-d", "/etc/apache2", "-k", "start"]
+EXPOSE 80
+
+CMD ["/usr/bin/run.sh"]
 
