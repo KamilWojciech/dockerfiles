@@ -27,5 +27,13 @@ RUN apt-get update && apt-get install -y --force-yes \
     apache2 \
     libapache2-mod-php5
 
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+ADD files/run.sh /usr/bin/run.sh
+RUN chmod 755 /usr/bin/run.sh
+
 EXPOSE 80
+WORKDIR /var/www
+
+CMD ["/usr/bin/run.sh"]
 
