@@ -20,12 +20,14 @@ RUN apt-get update && apt-get install -y --force-yes \
     php5-intl
 
 ADD files/php5/common.ini /etc/php5/common/common.ini
-ADD files/php5/cli.ini /etc/php5/cli/cli.ini
-ADD files/php5/apache.ini /etc/php5/apache2/apache.ini
+ADD files/php5/cli.ini /etc/php5/cli/conf.d/cli.ini
+ADD files/php5/apache.ini /etc/php5/apache2/conf.d/apache.ini
 
 RUN apt-get update && apt-get install -y --force-yes \
     apache2 \
     libapache2-mod-php5
+
+RUN a2enmod php5
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
